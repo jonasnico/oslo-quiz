@@ -1,5 +1,6 @@
 from scraper import get_data
-from db import db, Listing
+from db import db
+from models.listing import Listing
 
 def update_listings():
     listings = get_data()

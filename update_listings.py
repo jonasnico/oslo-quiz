@@ -1,6 +1,7 @@
 from scraper import get_data
 from db import db
 from models.listing import Listing
+from app import app
 
 def update_listings():
     listings = get_data()
@@ -10,4 +11,5 @@ def update_listings():
     db.session.commit()
 
 if __name__ == '__main__':
-    update_listings()
+    with app.app_context():
+        update_listings()

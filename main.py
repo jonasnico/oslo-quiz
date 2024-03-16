@@ -15,10 +15,6 @@ app.register_blueprint(listings)
 
 db.init_app(app)
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
 def update_listings():
     listings = get_data()
     for listing in listings:
@@ -40,5 +36,6 @@ def liste():
 
 if __name__ == '__main__':
     with app.app_context():
+        db.create_all()
         update_listings()
     app.run(debug=True)

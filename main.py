@@ -5,12 +5,25 @@ from scraper import get_data
 from models.listing import Listing
 from routes.listings import listings
 from dotenv import load_dotenv
+from google.cloud import secretmanager
 
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+def access_secret_version(project_id, secret_id, version_id="latest"):
+    client = secretmanager.SecretManagerServiceClient()
+    name = client.secret_version_path(project_id, secret_id, version_id)
+    response = client.access_secret_version(name)
+    return response.payload.data.decode('UTF-8')
+
+if os.getenv('FLASK_ENV') == 'production':
+    app.config['SQLALCHEMY_DATABASE_URI'] = access_secret_version('oslo-quiz', 'SQLALCHEMY_DATABASE_URI')
+    app.config['SECRET_KEY'] = access_secret_version('oslo-quiz', 'SQLALCHEMY_DATABASE_URI')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')    
+
 app.register_blueprint(listings)
 
 db.init_app(app)

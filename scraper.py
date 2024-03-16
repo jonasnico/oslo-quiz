@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 def get_data():
     url = 'https://www.norgesquizforbund.no/arrangementer/finn-din-pubquiz/'
     response = requests.get(url)

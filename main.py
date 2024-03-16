@@ -14,8 +14,13 @@ app = Flask(__name__)
 def access_secret_version(project_id, secret_id, version_id="latest"):
     client = secretmanager.SecretManagerServiceClient()
     name = client.secret_version_path(project_id, secret_id, version_id)
-    response = client.access_secret_version(name)
-    return response.payload.data.decode('UTF-8')
+    try:
+        response = client.access_secret_version(name)
+        return response.payload.data.decode('UTF-8')
+    except Exception as e:
+        print(f"Error: {e}")
+        print(f"Could not access secret: {name} in project: {project_id}")
+        raise
 
 if os.getenv('FLASK_ENV') == 'production':
     app.config['SQLALCHEMY_DATABASE_URI'] = access_secret_version('oslo-quiz', 'SQLALCHEMY_DATABASE_URI')

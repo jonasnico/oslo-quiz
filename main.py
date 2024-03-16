@@ -28,7 +28,7 @@ def get_listings():
 
 @app.route("/")
 def homepage():
-    return render_template("index.html", title="HOME PAGE")
+    return render_template("liste.html", title="HOME PAGE")
 
 @app.route("/liste")
 def liste():

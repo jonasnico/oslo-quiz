@@ -13,9 +13,9 @@ app = Flask(__name__)
 
 def access_secret_version(project_id, secret_id, version_id="latest"):
     client = secretmanager.SecretManagerServiceClient()
-    name = client.secret_version_path(project_id, secret_id, version_id)
+    name = f"projects/{project_id}/secrets/{secret_id}/versions/{version_id}"
     try:
-        response = client.access_secret_version(name)
+        response = client.access_secret_version(request={"name": name})
         return response.payload.data.decode('UTF-8')
     except Exception as e:
         print(f"Error: {e}")

@@ -2,3 +2,5 @@ runtime: python312
 
 env_variables:
   FLASK_ENV: 'production'
+
+entrypoint: gunicorn -b :$PORT main:app  

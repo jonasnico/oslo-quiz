@@ -22,7 +22,7 @@ def update_listings():
         db.session.add(new_listing)
     db.session.commit()
 
-@app.route('/api/scrape', methods=['GET'])
+@app.route('/api/listings', methods=['GET'])
 def get_listings():
     return jsonify(get_data())
 

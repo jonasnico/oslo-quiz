@@ -6,7 +6,7 @@ click==8.1.7
 python-dotenv==1.0.1
 Flask==3.0.2
 flask_sqlalchemy==3.1.1
-google.cloud==0.34.0
+google-cloud-secret-manager==2.18.3
 gunicorn==21.0.1
 idna==3.6
 itsdangerous==2.1.2

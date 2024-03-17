@@ -24,7 +24,7 @@ def access_secret_version(project_id, secret_id, version_id="latest"):
 
 if os.getenv('FLASK_ENV') == 'production':
     app.config['SQLALCHEMY_DATABASE_URI'] = access_secret_version('oslo-quiz', 'SQLALCHEMY_DATABASE_URI')
-    app.config['SECRET_KEY'] = access_secret_version('oslo-quiz', 'SQLALCHEMY_DATABASE_URI')
+    app.config['SECRET_KEY'] = access_secret_version('oslo-quiz', 'SECRET_KEY')
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')    
